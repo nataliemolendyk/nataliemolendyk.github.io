@@ -12,17 +12,26 @@
   --nav-link: #c7cfdc;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Gelasio', Georgia, 'Times New Roman', serif;
   background-color: var(--bg);
   color: var(--slate);
-  line-height: 1.6;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  letter-spacing: 0.3px;
 }
 
 /* Site-wide navigation header, present on every page */
 .site-header {
   background: var(--navy);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header-inner {
@@ -32,14 +41,6 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px;
-}
-
-.site-title {
-  color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.01em;
 }
 
 .site-header nav ul {
@@ -73,7 +74,6 @@ body {
   display: flex;
   align-items: center;
   gap: 50px;
-  background-color: var(--white);
   padding: 70px 50px;
   margin: 0 auto;
   max-width: 1100px;
@@ -100,18 +100,21 @@ body {
 .cta-button {
   display: inline-block;
   margin-top: 26px;
-  padding: 12px 28px;
+  padding: 14px 32px;
   background: var(--navy);
   color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
-  letter-spacing: 0.01em;
-  transition: background 0.2s ease;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(27, 41, 69, 0.2);
 }
 
 .cta-button:hover {
   background: var(--navy-dark);
+  box-shadow: 0 4px 12px rgba(27, 41, 69, 0.3);
+  transform: translateY(-1px);
 }
 
 .hero-photo {
@@ -130,72 +133,193 @@ body {
   box-shadow: 0 4px 18px rgba(20, 30, 50, 0.12);
 }
 
-/* Page header band, used on About Me and Interests pages */
-.page-header {
-  background: var(--navy);
-  color: #ffffff;
-  text-align: center;
-  padding: 56px 20px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 2.1rem;
-  font-weight: 700;
-}
-
 .container {
-  width: 90%;
-  max-width: 900px;
+  width: 100%;
+  max-width: 1100px;
   margin: 50px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .section,
 .about-me {
   background-color: var(--white);
   border: 1px solid var(--border);
-  padding: 35px;
+  padding: 40px;
   margin-bottom: 30px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.section:hover,
+.about-me:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  padding: 0;
+  justify-items: center;
+}
+
+
+.projects-grid figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 460px;
+  max-width: 100%;
+}
+
+.project-preview {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 0;
+  padding: 6px;
+  border: 1px solid var(--border);
+}
+
+.project-preview iframe {
+  /* Use a fixed desktop viewport and scale it down to create a true "mini" homepage */
+  width: 1280px;
+  height: 720px;
+  border: none;
+  box-shadow: 0 6px 22px rgba(20, 30, 50, 0.12);
+  transform-origin: 0 0;
+  display: block;
+  pointer-events: none; /* allow clicks to pass through to the surrounding link */
+  border-radius: 0;
+}
+
+.projects-grid figcaption a {
+  background: #f1f3f5;
+  color: var(--navy);
+  padding: 8px 12px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.projects-grid figcaption a:hover {
+  background: #e6e9ee;
+}
+
+/* Desktop thumbnail: 460x260 -> visible preview matches the frame */
+.projects-grid figure {
+  width: 460px;
+}
+.project-preview {
+  width: 460px;
+  height: 260px;
+  padding: 0;
+}
+.project-preview iframe {
+  transform: scale(0.359375);
+  transform-origin: 0 0;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  /* Medium thumbnails: 460x260 -> visible preview matches the frame */
+  .projects-grid figure {
+    width: 460px;
+  }
+  .project-preview {
+    width: 460px;
+    height: 260px;
+  }
+  .project-preview iframe {
+    transform: scale(0.359375);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Small thumbnails: 320x180 -> scale = 320/1280 = 0.25 */
+  .projects-grid {
+    gap: 18px;
+    padding: 12px;
+  }
+
+  .projects-grid figure {
+    width: 320px;
+  }
+  .project-preview {
+    width: 320px;
+    height: 180px;
+  }
+  .project-preview iframe {
+    transform: scale(0.25);
+  }
 }
 
 .section h2,
 .about-me h2 {
   color: var(--navy);
-  margin: 0 0 20px 0;
-  font-size: 1.6rem;
-  font-weight: 600;
+  margin: 0 0 24px 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .about-me {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  grid-column: 1 / -1;
 }
 
-ul {
-  padding-left: 20px;
-  margin: 0;
+/* Contact page section styling */
+.contact-section {
+  max-width: 900px;
+  margin: 100px auto;
+  grid-column: 1 / -1;
+  padding: 60px;
 }
 
-li {
-  margin-bottom: 12px;
-  color: var(--slate);
-}
-
-.interest-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 15px;
+/* Projects page section styling */
+.projects-section {
+  background-color: var(--white);
   border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(20, 30, 50, 0.08);
+  padding: 80px 48px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  grid-column: 1 / -1;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.projects-section h2 {
+  color: var(--navy);
+  margin: -8px 0 24px 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: left;
 }
 
 footer {
   text-align: center;
-  padding: 32px 20px;
+  padding: 40px 20px;
   background: var(--navy-dark);
   color: #aab4c4;
   font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 40px;
 }
 
 @media (max-width: 600px) {
@@ -221,16 +345,9 @@ footer {
     font-size: 1.9rem;
   }
 
-  .page-header {
-    padding: 40px 20px;
-  }
-
-  .page-header h1 {
-    font-size: 1.7rem;
-  }
-
   .container {
     margin: 30px auto;
+    grid-template-columns: 1fr;
   }
 
   .section,
